@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/small_vertical_separation"
+    android:paddingBottom="@dimen/small_vertical_separation"
+    android:paddingLeft="@dimen/default_horizontal_separation"
+    android:paddingRight="@dimen/default_horizontal_separation">
 
     <TextView
         android:id="@+id/games_list_row_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        tools:text="Some game"/>
 
 </LinearLayout>

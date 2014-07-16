@@ -1,9 +1,11 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="default_horizontal_margin">16dp</dimen>
-    <dimen name="default_vertical_margin">16dp</dimen>
-    <dimen name="big_horizontal_margin">32dp</dimen>
-    <dimen name="big_vertical_margin">32dp</dimen>
-    <dimen name="small_horizontal_margin">8dp</dimen>
-    <dimen name="small_vertical_margin">8dp</dimen>
+    <dimen name="big_horizontal_separation">32dp</dimen>
+    <dimen name="big_vertical_separation">32dp</dimen>
+    <dimen name="default_horizontal_separation">16dp</dimen>
+    <dimen name="default_vertical_separation">16dp</dimen>
+    <dimen name="small_horizontal_separation">8dp</dimen>
+    <dimen name="small_vertical_separation">8dp</dimen>
+    <dimen name="smallest_horizontal_separation">4dp</dimen>
+    <dimen name="smallest_vertical_separation">4dp</dimen>
 </resources>

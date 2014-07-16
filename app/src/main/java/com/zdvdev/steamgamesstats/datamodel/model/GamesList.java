@@ -1,8 +1,9 @@
 package com.zdvdev.steamgamesstats.datamodel.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class GamesList {
+public class GamesList implements Serializable {
 	private String steamID64;
 
 	private List<Game> games;

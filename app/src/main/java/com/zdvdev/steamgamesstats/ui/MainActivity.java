@@ -18,7 +18,7 @@ public class MainActivity extends NavigableActivity {
 
 		setContentView(R.layout.activity_main);
 		if (savedInstanceState == null) {
-			navigateTo(GamesListFragment.class, Mode.REPLACE);
+			navigateTo(UserSearchFragment.class, Mode.REPLACE);
 		}
 
 	}

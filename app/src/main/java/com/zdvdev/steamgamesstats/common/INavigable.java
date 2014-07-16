@@ -12,7 +12,7 @@ import static com.zdvdev.steamgamesstats.common.AnimationUtils.AnimationType;
 public interface INavigable {
 
 	public enum Mode {
-		REPLACE, ADD
+		REPLACE, ADD, OVERLAP
 	}
 
 	public void navigateTo(Class<? extends Fragment> frag, Mode mode);

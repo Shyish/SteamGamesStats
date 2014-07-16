@@ -1,18 +1,13 @@
 package com.zdvdev.steamgamesstats.ui;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import com.zdvdev.steamgamesstats.R;
-import com.zdvdev.steamgamesstats.async.OnJobStatusChangedListener;
-import com.zdvdev.steamgamesstats.datamodel.DataManager;
 import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
 import com.zdvdev.steamgamesstats.ui.adapter.GamesAdapter;
 import com.zdvdev.steamgamesstats.ui.navigable.NavigableFragment;
@@ -23,12 +18,10 @@ import com.zdvdev.steamgamesstats.ui.navigable.NavigableFragment;
  * @author aballano
  *         Date: 08/07/14
  */
-public class GamesListFragment extends NavigableFragment implements OnJobStatusChangedListener<GamesList> {
+public class GamesListFragment extends NavigableFragment {
 
+	public static final String KEY_GAMES = "games";
 	@InjectView(R.id.games_list) ListView mGamesList;
-	@InjectView(R.id.games_list_name_field) EditText mGamesListNameField;
-	@InjectView(R.id.games_list_send_button) Button mGamesListSendButton;
-	private GamesAdapter mAdapter;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return inflater.inflate(R.layout.games_list_layout, container, false);
@@ -37,31 +30,18 @@ public class GamesListFragment extends NavigableFragment implements OnJobStatusC
 	@Override public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		mAdapter = new GamesAdapter(getActivity());
-		mGamesList.setAdapter(mAdapter);
-	}
+		GamesAdapter adapter = new GamesAdapter(getActivity());
+		mGamesList.setAdapter(adapter);
 
-	@OnClick(R.id.games_list_send_button)
-	public void onSendButtonClicked() {
-		String steamUsername = mGamesListNameField.getText().toString();
-		if (TextUtils.isEmpty(steamUsername)) {
-			mGamesListNameField.setError(getString(R.string.error_field_required));
+		if (getArguments() != null && getArguments().containsKey(KEY_GAMES)) {
+			GamesList gamesList = (GamesList) getArguments().getSerializable(KEY_GAMES);
+
+			adapter.setData(gamesList.getGames());
 		} else {
-			DataManager.getGamesList(steamUsername, this, this);
+			Toast.makeText(getActivity(), R.string.error_nodata, Toast.LENGTH_LONG).show();
+			navigateUp();
 		}
+
 	}
 
-	@Override public void onCompleted(GamesList gamesList) {
-		mAdapter.setData(gamesList.getGames());
-		mGamesList.setVisibility(View.VISIBLE);
-		mGamesListNameField.setVisibility(View.GONE);
-		mGamesListSendButton.setVisibility(View.GONE);
-	}
-
-	@Override public void onUpdate(int progress) {}
-
-	@Override public void onError(Throwable throwable) {
-		//TODO
-		throwable.printStackTrace();
-	}
 }

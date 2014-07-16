@@ -5,5 +5,6 @@
     <string name="send">Send</string>
     <string name="steam_user_hint">Write your Steam username</string>
     <string name="error_field_required">Required field</string>
+    <string name="error_nodata">Error: No data provided</string>
 
 </resources>

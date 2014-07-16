@@ -30,11 +30,16 @@ public abstract class NavigableActivity extends BaseActivity implements INavigab
 			case REPLACE:
 				ft.replace(getFrameNavigationContainer(), fragment, null);
 				break;
-
 			case ADD:
+				Fragment previousFragment = getSupportFragmentManager().findFragmentById(getFrameNavigationContainer());
+				if (previousFragment != null){
+					ft.hide(previousFragment);
+				}
+			case OVERLAP:
 				ft.add(getFrameNavigationContainer(), fragment, null);
 				ft.addToBackStack(null);
 				break;
+
 		}
 		ft.commit();
 	}
