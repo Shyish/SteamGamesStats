@@ -1,9 +1,11 @@
 package com.zdvdev.steamgamesstats.datamodel.model;
 
+import java.util.List;
+
 public class GamesList {
 	private String steamID64;
 
-	private Game[] games;
+	private List<Game> games;
 
 	private String steamID;
 
@@ -15,11 +17,11 @@ public class GamesList {
 		this.steamID64 = steamID64;
 	}
 
-	public Game[] getGames() {
+	public List<Game> getGames() {
 		return games;
 	}
 
-	public void setGames(Game[] games) {
+	public void setGames(List<Game> games) {
 		this.games = games;
 	}
 

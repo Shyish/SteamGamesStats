@@ -38,3 +38,8 @@ proguard-project.txt
 tmp
 keystore
 prod/Releases
+
+# Crashlytics
+crashlytics.properties
+com_crashlytics_export_strings.xml
+crashlytics-build.properties

@@ -1,5 +1,11 @@
 package com.zdvdev.steamgamesstats.datamodel;
 
+import android.support.v4.app.Fragment;
+import com.zdvdev.steamgamesstats.async.ISubscription;
+import com.zdvdev.steamgamesstats.async.OnJobStatusChangedListener;
+import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
+import com.zdvdev.steamgamesstats.datamodel.source.CloudDataSource;
+
 /**
  * Created with Android Studio.
  *
@@ -9,19 +15,7 @@ package com.zdvdev.steamgamesstats.datamodel;
 @SuppressWarnings("unchecked")
 public class DataManager {
 
-
-//	public static ISubscription getMtgCardList(final Context ctx, Fragment fragment, final OnJobStatusChangedListener<List<MtgCard>> listener) {
-//		final Observable<List<MtgCard>> sourceObservable = Observable.create(new Observable.OnSubscribe<List<MtgCard>>() {
-//			@Override public void call(Subscriber<? super List<MtgCard>> subscriber) {
-//				subscriber.onNext(DBDataSource.getInstance(ctx).getMtgCardList());
-//				subscriber.onCompleted();
-//			}
-//		});
-//
-//		CustomObserver<List<MtgCard>> observer = new CustomObserver<List<MtgCard>>(listener);
-//		rx.Subscription subscription =
-//				AndroidObservable.bindFragment(fragment, sourceObservable).subscribeOn(AndroidSchedulers.mainThread()).subscribe(observer);
-//
-//		return new CustomSubscription(subscription);
-//	}
+	public static ISubscription getGamesList(String username, Fragment fragment, OnJobStatusChangedListener<GamesList> listener) {
+		return CloudDataSource.requestFromFragmentForObserver(fragment, listener, CloudDataSource.getApiManager().getGamesForUser(username));
+	}
 }

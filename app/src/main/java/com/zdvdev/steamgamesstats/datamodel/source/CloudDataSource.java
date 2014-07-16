@@ -9,6 +9,7 @@ import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
 import com.zdvdev.steamgamesstats.datamodel.source.converter.SimpleXMLConverter;
 import retrofit.RestAdapter;
 import retrofit.http.GET;
+import retrofit.http.Path;
 import rx.Observable;
 import rx.android.observables.AndroidObservable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,7 +34,7 @@ public class CloudDataSource {
 	static final String URI_GET_ID = "/actions/Search?T=Account&K=%22{" + PARAM_NAME + "}%22"; //view-source:steamcommunity.com/actions/Search?T=Account&K="javier"
 	static final String URI_GET_PROFILE = "/id/{" + PARAM_NAME + "}/?" + FORMAT;
 	static final String URI_GET_GAMES_FROM_ID = "/profile/{" + PARAM_ID + "}/games?tab=all" + FORMAT;
-	static final String URI_GET_GAMES_FROM_NAME = "/id/{" + PARAM_ID + "}/games?tab=all" + FORMAT;
+	static final String URI_GET_GAMES_FROM_NAME = "/id/{" + PARAM_NAME + "}/games?tab=all" + FORMAT;
 
 	private static RestAdapter mRestAdapter;
 	private static ApiManagerService mApiManager;
@@ -53,8 +54,8 @@ public class CloudDataSource {
 	}
 
 	public interface ApiManagerService {
-		@GET(URI_GET_GAMES_FROM_NAME) Observable<GamesList> getGamesForUser(String user);
-		@GET(URI_GET_GAMES_FROM_ID) Observable<GamesList> getGamesForUser(long user);
+		@GET(URI_GET_GAMES_FROM_NAME) Observable<GamesList> getGamesForUser(@Path(PARAM_NAME) String user);
+		@GET(URI_GET_GAMES_FROM_ID) Observable<GamesList> getGamesForUser(@Path(PARAM_ID) long user);
 	}
 
 	/**

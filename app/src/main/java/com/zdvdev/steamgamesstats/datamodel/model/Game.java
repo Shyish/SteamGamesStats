@@ -1,21 +1,21 @@
 package com.zdvdev.steamgamesstats.datamodel.model;
 
 public class Game {
-	private String logo;
+	public String logo;
 
-	private String storeLink;
+	public String storeLink;
 
-	private String statsLink;
+	public String statsLink;
 
-	private String globalStatsLink;
+	public String globalStatsLink;
 
-	private String name;
+	public String name;
 
-	private String hoursOnRecord;
+	public String hoursOnRecord;
 
-	private String appID;
+	public String appID;
 
-	private String hoursLast2Weeks;
+	public String hoursLast2Weeks;
 
 	public String getLogo() {
 		return logo;
