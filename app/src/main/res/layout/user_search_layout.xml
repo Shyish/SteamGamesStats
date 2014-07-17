@@ -7,22 +7,43 @@
     android:paddingLeft="@dimen/default_horizontal_separation"
     android:paddingRight="@dimen/default_horizontal_separation">
 
-    <EditText
-        android:id="@+id/games_list_name_field"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/steam_user_hint"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_toLeftOf="@+id/games_list_send_button"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/games_list_send_button">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <LinearLayout
+                android:id="@+id/games_list_fields_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/games_list_name_field"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/steam_user_hint" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
 
     <Button
         android:id="@+id/games_list_send_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/send"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <include
         layout="@layout/loading_view"

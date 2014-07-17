@@ -3,8 +3,9 @@
 
     <string name="app_name">SteamGamesStats</string>
     <string name="send">Send</string>
-    <string name="steam_user_hint">Write your Steam username</string>
+    <string name="steam_user_hint">Write a Steam username</string>
     <string name="error_field_required">Required field</string>
     <string name="error_nodata">Error: No data provided</string>
+    <string name="add_user">Add another username</string>
 
 </resources>

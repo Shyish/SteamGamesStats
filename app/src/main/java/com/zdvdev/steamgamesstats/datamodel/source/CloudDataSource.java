@@ -25,16 +25,19 @@ public class CloudDataSource {
 	private static final String SERVER_URL = "http://steamcommunity.com";
 
 	// Url params
-	static final String PARAM_NAME = "name";
+//	static final String PARAM_GAME_NAME = "gamename";
+	static final String PARAM_USER_NAME = "username";
 	static final String PARAM_ID = "id";
 
 	static final String FORMAT = "&xml=1";
 
 	// API methods
-	static final String URI_GET_ID = "/actions/Search?T=Account&K=%22{" + PARAM_NAME + "}%22"; //view-source:steamcommunity.com/actions/Search?T=Account&K="javier"
-	static final String URI_GET_PROFILE = "/id/{" + PARAM_NAME + "}/?" + FORMAT;
+	static final String URI_GET_ID = "/actions/Search?T=Account&K=%22{" + PARAM_USER_NAME + "}%22"; //view-source:steamcommunity.com/actions/Search?T=Account&K="javier"
+	static final String URI_GET_PROFILE = "/id/{" + PARAM_USER_NAME + "}/?" + FORMAT;
 	static final String URI_GET_GAMES_FROM_ID = "/profile/{" + PARAM_ID + "}/games?tab=all" + FORMAT;
-	static final String URI_GET_GAMES_FROM_NAME = "/id/{" + PARAM_NAME + "}/games?tab=all" + FORMAT;
+	static final String URI_GET_GAMES_FROM_USER = "/id/{" + PARAM_USER_NAME + "}/games?tab=all" + FORMAT;
+	//TODO build the url or extract from the 'statsLink's Game param
+//	static final String URI_GET_ACHIEVEMENTS_FOR_GAME_FROM_USER = "/id/{" + PARAM_USER_NAME + "}/stats/{" + PARAM_GAME_NAME + "}?"+ FORMAT;
 
 	private static RestAdapter mRestAdapter;
 	private static ApiManagerService mApiManager;
@@ -54,7 +57,7 @@ public class CloudDataSource {
 	}
 
 	public interface ApiManagerService {
-		@GET(URI_GET_GAMES_FROM_NAME) Observable<GamesList> getGamesForUser(@Path(PARAM_NAME) String user);
+		@GET(URI_GET_GAMES_FROM_USER) Observable<GamesList> getGamesForUser(@Path(PARAM_USER_NAME) String user);
 		@GET(URI_GET_GAMES_FROM_ID) Observable<GamesList> getGamesForUser(@Path(PARAM_ID) long user);
 	}
 

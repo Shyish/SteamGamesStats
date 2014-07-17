@@ -1,29 +1,15 @@
 package com.zdvdev.steamgamesstats.datamodel.model;
 
-public class Game {
-	public String logo;
+public class Game extends BasicGame {
+	private String storeLink;
 
-	public String storeLink;
+	private String statsLink;
 
-	public String statsLink;
+	private String globalStatsLink;
 
-	public String globalStatsLink;
+	private float hoursOnRecord;
 
-	public String name;
-
-	public String hoursOnRecord;
-
-	public String appID;
-
-	public String hoursLast2Weeks;
-
-	public String getLogo() {
-		return logo;
-	}
-
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+	private float hoursLast2Weeks;
 
 	public String getStoreLink() {
 		return storeLink;
@@ -49,35 +35,19 @@ public class Game {
 		this.globalStatsLink = globalStatsLink;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getHoursOnRecord() {
+	public float getHoursOnRecord() {
 		return hoursOnRecord;
 	}
 
-	public void setHoursOnRecord(String hoursOnRecord) {
+	public void setHoursOnRecord(float hoursOnRecord) {
 		this.hoursOnRecord = hoursOnRecord;
 	}
 
-	public String getAppID() {
-		return appID;
-	}
-
-	public void setAppID(String appID) {
-		this.appID = appID;
-	}
-
-	public String getHoursLast2Weeks() {
+	public float getHoursLast2Weeks() {
 		return hoursLast2Weeks;
 	}
 
-	public void setHoursLast2Weeks(String hoursLast2Weeks) {
+	public void setHoursLast2Weeks(float hoursLast2Weeks) {
 		this.hoursLast2Weeks = hoursLast2Weeks;
 	}
 }

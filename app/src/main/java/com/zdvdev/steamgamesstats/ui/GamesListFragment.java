@@ -36,6 +36,8 @@ public class GamesListFragment extends NavigableFragment {
 		if (getArguments() != null && getArguments().containsKey(KEY_GAMES)) {
 			GamesList gamesList = (GamesList) getArguments().getSerializable(KEY_GAMES);
 
+			//TODO sorting by name or playtime
+
 			adapter.setData(gamesList.getGames());
 		} else {
 			Toast.makeText(getActivity(), R.string.error_nodata, Toast.LENGTH_LONG).show();
@@ -43,5 +45,17 @@ public class GamesListFragment extends NavigableFragment {
 		}
 
 	}
+
+//	@Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//		inflater.inflate(R.menu.search_menu, menu);
+//	}
+//
+//	@Override public boolean onOptionsItemSelected(MenuItem item) {
+//		int id = item.getItemId();
+//		if (id == R.id.action_sort) {
+//			item.setIcon(R.drawable.)
+//		}
+//		return true;
+//	}
 
 }

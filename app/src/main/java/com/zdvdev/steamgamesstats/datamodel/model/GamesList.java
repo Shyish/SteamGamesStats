@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.List;
 
 public class GamesList implements Serializable {
-	private String steamID64;
+	private long steamID64;
 
 	private List<Game> games;
 
 	private String steamID;
 
-	public String getSteamID64() {
+	public long getSteamID64() {
 		return steamID64;
 	}
 
-	public void setSteamID64(String steamID64) {
+	public void setSteamID64(long steamID64) {
 		this.steamID64 = steamID64;
 	}
 
