@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import butterknife.ButterKnife;
@@ -26,6 +25,7 @@ import com.zdvdev.steamgamesstats.datamodel.model.Game;
 import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
 import com.zdvdev.steamgamesstats.datamodel.model.wrapper.GameUsersWrapper;
 import com.zdvdev.steamgamesstats.ui.navigable.NavigableFragment;
+import com.zdvdev.steamgamesstats.widget.RemovableEditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,7 +47,7 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 	@InjectView(R.id.games_list_fields_container) LinearLayout mGamesListFieldsContainer;
 	@InjectView(R.id.loading_view) View mLoadingView;
 
-	private final ArrayList<EditText> userFields = new ArrayList<EditText>();
+	private final ArrayList<RemovableEditText> userFields = new ArrayList<RemovableEditText>();
 	private int remainingRequests;
 
 	@Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -57,7 +57,9 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 	@Override public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		setHasOptionsMenu(true);
-		userFields.add((EditText) view.findViewById(R.id.games_list_name_field));
+		RemovableEditText mainUsernameField = (RemovableEditText) view.findViewById(R.id.games_list_name_field);
+		mainUsernameField.setRemovable(false);
+		userFields.add(mainUsernameField);
 	}
 
 	@Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -67,7 +69,7 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 	@Override public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
 		if (id == R.id.action_add_user) {
-			EditText et = new EditText(getActivity());
+			RemovableEditText et = new RemovableEditText(getActivity());
 			et.setHint(R.string.steam_user_hint);
 			userFields.add(et);
 			mGamesListFieldsContainer.addView(et);
@@ -90,16 +92,16 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 
 			commonGames.clear();
 			remainingRequests = userFields.size();
-			for (EditText et : userFields) {
-				DataManager.getGamesList(et.getText().toString(), this, this);
+			for (RemovableEditText et : userFields) {
+				DataManager.getGamesList(et.getText(), this, this);
 			}
 		}
 	}
 
 	private boolean allFieldsFilled() {
 		boolean ret = true;
-		for (EditText et : userFields) {
-			if (TextUtils.isEmpty(et.getText().toString())) {
+		for (RemovableEditText et : userFields) {
+			if (TextUtils.isEmpty(et.getText())) {
 				et.setError(getString(R.string.error_field_required));
 				ret = false;
 			}
