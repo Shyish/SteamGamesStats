@@ -7,5 +7,7 @@
     <string name="error_field_required">Required field</string>
     <string name="error_nodata">Error: No data provided</string>
     <string name="add_user">Add another username</string>
+    <string name="error_search_user">Something went wrong, make sure you have internet connection and the requested profile(s) are public
+        and valid.</string>
 
 </resources>

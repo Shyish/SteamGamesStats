@@ -3,6 +3,7 @@ package com.zdvdev.steamgamesstats.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -14,21 +15,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import com.zdvdev.steamgamesstats.R;
 import com.zdvdev.steamgamesstats.async.OnJobStatusChangedListener;
 import com.zdvdev.steamgamesstats.datamodel.DataManager;
-import com.zdvdev.steamgamesstats.datamodel.model.BasicGame;
 import com.zdvdev.steamgamesstats.datamodel.model.Game;
 import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
+import com.zdvdev.steamgamesstats.datamodel.model.wrapper.GameUsersWrapper;
 import com.zdvdev.steamgamesstats.ui.navigable.NavigableFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,8 +41,7 @@ import java.util.List;
  */
 public class UserSearchFragment extends NavigableFragment implements OnJobStatusChangedListener<GamesList> {
 
-	// Game -> List(User - Playtime)
-	private final HashMap<BasicGame, ArrayList<Pair<String, Float>>> commonGames = new HashMap<BasicGame, ArrayList<Pair<String, Float>>>();
+	private final ArrayList<GameUsersWrapper> commonGames = new ArrayList<GameUsersWrapper>();
 
 	@InjectView(R.id.games_list_send_button) Button mGamesListSendButton;
 	@InjectView(R.id.games_list_fields_container) LinearLayout mGamesListFieldsContainer;
@@ -119,40 +119,48 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 		// First of all, order the games list by their ids in order to cross lists quickly
 		Collections.sort(gamesList.getGames(), gameIdComparator);
 
-		//TODO
+		// Fill up the list
 		if (commonGames.isEmpty()) {
 			for (Game game : gamesList.getGames()) {
 				ArrayList<Pair<String, Float>> users = new ArrayList<Pair<String, Float>>();
 				users.add(new Pair<String, Float>(gamesList.getSteamID(), game.getHoursOnRecord()));
 
-				commonGames.put(game, users);
+				commonGames.add(new GameUsersWrapper(game, users));
 			}
-		}
+		} else {
+			long iTime = System.currentTimeMillis();
+			int items = commonGames.size() * gamesList.getGames().size();
 
-		//TODO cross lists
+			for (Iterator<GameUsersWrapper> iterator = commonGames.iterator(); iterator.hasNext(); ) {
+				GameUsersWrapper bgame = iterator.next();
+				boolean nonCommonGame = true;
+				List<Game> games = gamesList.getGames();
 
-		for (Iterator<BasicGame> iterator = commonGames.keySet().iterator(); iterator.hasNext(); ) {
-			BasicGame bgame = iterator.next();
-			boolean gameMatch = false;
-			List<Game> games = gamesList.getGames();
-			for (int i = 0, gamesSize = games.size(); i < gamesSize && !gameMatch; i++) {
-				Game game = games.get(i);
-				if (bgame.getAppID() == game.getAppID()) {
-					gameMatch = true;
-				} else if (bgame.getAppID() > game.getAppID()) {
-					// Since our 'gameList' list is ordered by the appID, we can skip the rest if the searched one is greater
-					break;
+				for (Game game : games) {
+
+					if (bgame.game.getAppID() == game.getAppID()) {
+						nonCommonGame = false;
+						bgame.usersHours.add(new Pair<String, Float>(gamesList.getSteamID(), game.getHoursOnRecord()));
+						break;
+
+					} else if (bgame.game.getAppID() < game.getAppID()) {
+						// Since our 'gameList' list is ordered by the appID, we can skip the rest if the searched one is greater
+						nonCommonGame = true;
+						break;
+					}
+				}
+				if (nonCommonGame) {
+					iterator.remove();
 				}
 			}
-			if (!gameMatch) {
-				iterator.remove();
-			}
+
+			Log.d("Debug", "Processing time for " + items + " items (ms): " + (System.currentTimeMillis() - iTime));
 		}
 
 
 		if (--remainingRequests == 0) {
 			Bundle params = new Bundle();
-			params.putSerializable(GamesListFragment.KEY_GAMES, gamesList);
+			params.putSerializable(GamesListFragment.KEY_GAMES, commonGames);
 			navigateTo(GamesListFragment.class, Mode.ADD, params);
 
 			ButterKnife.apply(userFields, ENABLED, true);
@@ -164,11 +172,13 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 	@Override public void onUpdate(int progress) {}
 
 	@Override public void onError(Throwable throwable) {
-		//TODO
-		throwable.printStackTrace();
 		ButterKnife.apply(userFields, ENABLED, true);
 		mGamesListSendButton.setEnabled(true);
 		mLoadingView.setVisibility(View.GONE);
+
+		//TODO difference between internet err/timeout, private profile and non-updated profile.
+		throwable.printStackTrace();
+		Toast.makeText(getActivity(), R.string.error_search_user, Toast.LENGTH_LONG).show();
 	}
 
 	private static final ButterKnife.Setter<View, Boolean> ENABLED = new ButterKnife.Setter<View, Boolean>() {

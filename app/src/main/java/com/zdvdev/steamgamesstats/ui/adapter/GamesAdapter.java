@@ -9,11 +9,9 @@ import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import com.zdvdev.steamgamesstats.R;
-import com.zdvdev.steamgamesstats.datamodel.model.Game;
+import com.zdvdev.steamgamesstats.datamodel.model.wrapper.GameUsersWrapper;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -23,22 +21,17 @@ import java.util.List;
  */
 public class GamesAdapter extends BaseAdapter {
 	private final LayoutInflater mInflater;
-	private List<Game> mData;
+	private ArrayList<GameUsersWrapper> mData;
 
 	public GamesAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
 	}
 
-	public void setData(List<Game> data) {
-		mData = data;
+	public void setData(ArrayList<GameUsersWrapper> gamesList) {
+		mData = gamesList;
 		notifyDataSetChanged();
 	}
 
-
-	public void setData(Game[] games) {
-		mData = new ArrayList<Game>(Arrays.asList(games));
-		notifyDataSetChanged();
-	}
 
 	@Override
 	public int getCount() {
@@ -49,7 +42,7 @@ public class GamesAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public Game getItem(int position) {
+	public GameUsersWrapper getItem(int position) {
 		if (mData != null) {
 			return mData.get(position);
 		}
@@ -73,13 +66,12 @@ public class GamesAdapter extends BaseAdapter {
 			h = (ViewHolder) convertView.getTag();
 		}
 
-		Game item = getItem(position);
+		GameUsersWrapper item = getItem(position);
 
-		h.mGameName.setText(item.getName());
+		h.mGameName.setText(item.game.getName());
 
 		return convertView;
 	}
-
 
 	public static class ViewHolder {
 		@InjectView(R.id.games_list_row_name) TextView mGameName;

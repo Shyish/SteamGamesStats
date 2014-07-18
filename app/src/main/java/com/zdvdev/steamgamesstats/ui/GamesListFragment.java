@@ -8,9 +8,11 @@ import android.widget.ListView;
 import android.widget.Toast;
 import butterknife.InjectView;
 import com.zdvdev.steamgamesstats.R;
-import com.zdvdev.steamgamesstats.datamodel.model.GamesList;
+import com.zdvdev.steamgamesstats.datamodel.model.wrapper.GameUsersWrapper;
 import com.zdvdev.steamgamesstats.ui.adapter.GamesAdapter;
 import com.zdvdev.steamgamesstats.ui.navigable.NavigableFragment;
+
+import java.util.ArrayList;
 
 /**
  * Created with Android Studio.
@@ -33,29 +35,32 @@ public class GamesListFragment extends NavigableFragment {
 		GamesAdapter adapter = new GamesAdapter(getActivity());
 		mGamesList.setAdapter(adapter);
 
-		if (getArguments() != null && getArguments().containsKey(KEY_GAMES)) {
-			GamesList gamesList = (GamesList) getArguments().getSerializable(KEY_GAMES);
+		Bundle args = getArguments();
+		if (args != null && args.containsKey(KEY_GAMES)) {
+			ArrayList<GameUsersWrapper> gamesList = (ArrayList<GameUsersWrapper>) args.getSerializable(KEY_GAMES);
 
 			//TODO sorting by name or playtime
 
-			adapter.setData(gamesList.getGames());
+			adapter.setData(gamesList);
 		} else {
 			Toast.makeText(getActivity(), R.string.error_nodata, Toast.LENGTH_LONG).show();
 			navigateUp();
 		}
 
+		//TODO maybe add some extra info in a top bar like:
+		// Total hours per player (SU, MU)
 	}
 
-//	@Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//		inflater.inflate(R.menu.search_menu, menu);
-//	}
-//
-//	@Override public boolean onOptionsItemSelected(MenuItem item) {
-//		int id = item.getItemId();
-//		if (id == R.id.action_sort) {
-//			item.setIcon(R.drawable.)
-//		}
-//		return true;
-//	}
+	//	@Override public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+	//		inflater.inflate(R.menu.search_menu, menu);
+	//	}
+	//
+	//	@Override public boolean onOptionsItemSelected(MenuItem item) {
+	//		int id = item.getItemId();
+	//		if (id == R.id.action_sort) {
+	//			item.setIcon(R.drawable.)
+	//		}
+	//		return true;
+	//	}
 
 }
