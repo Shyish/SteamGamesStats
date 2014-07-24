@@ -10,8 +10,10 @@
     android:paddingRight="@dimen/default_horizontal_separation">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:id="@+id/games_list_row_image"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/default_game_img"/>
 
     <TextView
         android:id="@+id/games_list_row_name"

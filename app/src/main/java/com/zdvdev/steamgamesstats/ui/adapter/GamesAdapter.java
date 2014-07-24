@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import com.squareup.picasso.Picasso;
 import com.zdvdev.steamgamesstats.R;
 import com.zdvdev.steamgamesstats.datamodel.model.wrapper.GameUsersWrapper;
 
@@ -73,12 +75,14 @@ public class GamesAdapter extends BaseAdapter {
 		GameUsersWrapper item = getItem(position);
 
 		h.mGameName.setText(item.game.getName());
+		Picasso.with(convertView.getContext()).load(item.game.getLogo()).placeholder(R.drawable.default_game_img).into(h.mGameImage);
 
 		return convertView;
 	}
 
 	public static class ViewHolder {
 		@InjectView(R.id.games_list_row_name) TextView mGameName;
+		@InjectView(R.id.games_list_row_image) ImageView mGameImage;
 
 		ViewHolder(View view) {ButterKnife.inject(this, view);}
 	}

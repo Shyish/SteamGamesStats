@@ -9,7 +9,7 @@ Goals (features)
 ===============
 X 1 Single User: game's enumeration
 
-  2 Multi User: game's matching (aka what games do they have in common)
+X 2 Multi User: game's matching (aka what games do they have in common)
 
   3 SU: game's statistics.
 
