@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <EditText
+                <com.zdvdev.steamgamesstats.widget.RemovableEditText
                     android:id="@+id/games_list_name_field"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
