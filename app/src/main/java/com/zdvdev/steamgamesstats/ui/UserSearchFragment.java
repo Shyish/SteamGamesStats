@@ -39,7 +39,7 @@ import java.util.List;
  * @author aballano
  *         Date: 16/07/14
  */
-public class UserSearchFragment extends NavigableFragment implements OnJobStatusChangedListener<GamesList> {
+public class UserSearchFragment extends NavigableFragment implements OnJobStatusChangedListener<GamesList>, RemovableEditText.OnFieldRemovedListener {
 
 	private final ArrayList<GameUsersWrapper> commonGames = new ArrayList<GameUsersWrapper>();
 
@@ -70,6 +70,7 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 		int id = item.getItemId();
 		if (id == R.id.action_add_user) {
 			RemovableEditText et = new RemovableEditText(getActivity());
+			et.setOnFieldRemovedListener(this);
 			et.setHint(R.string.steam_user_hint);
 			userFields.add(et);
 			mGamesListFieldsContainer.addView(et);
@@ -79,6 +80,10 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 		return true;
 	}
 
+	@Override public void onFieldRemoved(RemovableEditText field) {
+		userFields.remove(field);
+		mGamesListFieldsContainer.removeView(field);
+	}
 
 	@OnClick(R.id.games_list_send_button)
 	public void onSendButtonClicked() {
@@ -112,7 +117,6 @@ public class UserSearchFragment extends NavigableFragment implements OnJobStatus
 
 	private static final Comparator<Game> gameIdComparator = new Comparator<Game>() {
 		@Override public int compare(Game lhs, Game rhs) {
-
 			return lhs.compareTo(rhs);
 		}
 	};

@@ -20,6 +20,11 @@ public class RemovableEditText extends RelativeLayout implements View.OnClickLis
 
 	private EditText mEditText;
 	private ImageButton mDeleteButton;
+	private OnFieldRemovedListener listener;
+
+	public interface OnFieldRemovedListener {
+		public void onFieldRemoved(RemovableEditText field);
+	}
 
 	public RemovableEditText(Context context) {
 		super(context);
@@ -54,7 +59,15 @@ public class RemovableEditText extends RelativeLayout implements View.OnClickLis
 	}
 
 	@Override public void onClick(View v) {
-		((ViewGroup) getParent()).removeView(this);
+		if (listener == null) {
+			((ViewGroup) getParent()).removeView(this);
+		} else {
+			listener.onFieldRemoved(this);
+		}
+	}
+
+	public void setOnFieldRemovedListener(OnFieldRemovedListener listener) {
+		this.listener = listener;
 	}
 
 	public void setError(String string) {

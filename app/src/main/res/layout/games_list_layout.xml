@@ -1,9 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/games_list"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:listitem="@layout/game_list_row_layout">
+    android:layout_height="match_parent">
 
-</ListView>
+    <ListView
+        android:id="@+id/games_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/game_list_row_layout"
+        android:layout_above="@+id/games_list_total">
+
+    </ListView>
+
+    <TextView
+        android:id="@+id/games_list_total"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_60_alpha"
+        android:textColor="@android:color/white"
+        android:paddingTop="@dimen/small_vertical_separation"
+        android:paddingBottom="@dimen/small_vertical_separation"
+        android:paddingLeft="@dimen/default_horizontal_separation"
+        android:paddingRight="@dimen/default_horizontal_separation"
+        tools:text="Total games: 8"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

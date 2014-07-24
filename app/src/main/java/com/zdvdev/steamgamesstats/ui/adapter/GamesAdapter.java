@@ -21,17 +21,21 @@ import java.util.ArrayList;
  */
 public class GamesAdapter extends BaseAdapter {
 	private final LayoutInflater mInflater;
+
 	private ArrayList<GameUsersWrapper> mData;
 
 	public GamesAdapter(Context context) {
 		mInflater = LayoutInflater.from(context);
 	}
 
+	public ArrayList<GameUsersWrapper> getData() {
+		return mData;
+	}
+
 	public void setData(ArrayList<GameUsersWrapper> gamesList) {
 		mData = gamesList;
 		notifyDataSetChanged();
 	}
-
 
 	@Override
 	public int getCount() {
