@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/main_color</item>
+        <item name="colorPrimaryDark">@color/main_color_darker</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="colorAccent">@color/secondary_color</item>
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+    </style>
+
+    <style name="AppTheme.Toolbar">
+        <item name="android:background">@color/main_color</item>
+        <item name="android:textColorPrimary">@color/secondary_color</item>
+        <item name="android:textColorSecondary">@color/secondary_color</item>
+    </style>
+
+</resources>

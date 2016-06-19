@@ -9,7 +9,7 @@
     <string name="add_user">Add another username</string>
     <string name="error_search_user">Something went wrong, make sure you have internet connection and the requested profile(s) are public
         and valid.</string>
-    <string name="games_list_total">Total games: %s</string>
+    <string name="games_list_total">Total games: %d</string>
     <string name="sort_size">Sort by playtime (desc)</string>
     <string name="sort_alphabetically">Sort alphabetically (asc)</string>
 

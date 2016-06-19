@@ -1,30 +1,83 @@
-apply plugin: 'android'
+buildscript {
+    repositories {
+        jcenter()
+    }
+    //https://gist.github.com/Shyish/404c9295d5dec6a468b69a24802cc899
+    apply from: "https://gist.githubusercontent.com/Shyish/404c9295d5dec6a468b69a24802cc899/raw/" +
+          "52872fa4eb3eb49ac9653aa2ed9f5eef57597797" + // revision
+          "/gradle.dependencies"
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-android-extensions:$versions.kotlinVersion"
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.4'
+    }
+
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'android-apt'
+apply plugin: 'jacoco-android'
+
+jacoco {
+    toolVersion = "0.7.6.201602180812"
+}
 
 android {
-    compileSdkVersion 20
-    buildToolsVersion "19.1.0"
-
+    compileSdkVersion project.ext.compileSdkVersion
+    buildToolsVersion '23.0.3'
     defaultConfig {
-        applicationId "com.zdvdev.steamgamesstats"
-        minSdkVersion 9
-        targetSdkVersion 20
+        applicationId 'com.zdvdev.steamgamesstats'
+        minSdkVersion project.ext.minSdkVersion
+        targetSdkVersion project.ext.targetSdkVersion
         versionCode 3
         versionName "0.3"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles 'proguard.cfg'
+            debuggable false
+        }
+        debug {
+            testCoverageEnabled true
         }
     }
+//    testOptions {
+//        unitTests.all {
+//            jacoco {
+//                includeNoLocationClasses = true
+//            }
+//        }
+//    }
+
+//    compileOptions {
+//        sourceCompatibility JavaVersion.VERSION_1_7
+//        targetCompatibility JavaVersion.VERSION_1_7
+//    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:20.+'
-    compile 'com.jakewharton:butterknife:+'
-    compile 'com.squareup.retrofit:retrofit:+'
-    compile 'com.netflix.rxjava:rxjava-android:+'
-    compile 'uk.co.chrisjenx.calligraphy:calligraphy:+'
-    compile 'com.squareup.picasso:picasso:2.2.+'
+
+    compile "com.android.support:appcompat-v7:$versions.supportLibVersion"
+    compile "com.android.support:design:$versions.supportLibVersion"
+    compile libraries.butterknife
+    compile libraries.retrofit
+    compile libraries.retrofitSimpleXml
+    compile "com.squareup.retrofit2:adapter-rxjava:$versions.retrofitVersion"
+    compile libraries.rxandroid
+    compile libraries.picasso
+    compile libraries.kotlin
+
+    // Unit tests
+    testCompile libraries.assertJ
+    testCompile 'org.mockito:mockito-core:1.10.19'//libraries.mockito
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.robolectric:robolectric:3.0'
+
+    apt libraries.butterknifeCompiler
 }

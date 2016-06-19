@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black_60_alpha">#AA000000</color>
+
+    <color name="main_color">#131C2A</color>
+    <color name="main_color_darker">#171A21</color>
+    <color name="background">#202F4C</color>
+    <color name="secondary_color">#748C20</color>
 </resources>
